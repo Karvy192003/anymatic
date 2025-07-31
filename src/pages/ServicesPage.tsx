@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bot, Brain, Users, Globe, Target, Zap, BookOpen, Award } from 'lucide-react';
+import AIContentGenerator from '../components/AIContentGenerator';
 
 const ServicesPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -161,6 +162,33 @@ const ServicesPage = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* AI Content Generator Demo */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#F8F9FA] to-white">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-bold text-[#2D2D2D] mb-4">
+              Try Our <span className="bg-gradient-to-r from-[#3A86FF] to-[#A259FF] bg-clip-text text-transparent">AI Content Generator</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Experience the power of our AI-driven educational content generation firsthand.
+            </p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <AIContentGenerator />
+          </motion.div>
         </div>
       </section>
 

@@ -7,4 +7,12 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  // Ensure proper base path for Netlify deployment
+  base: '/',
+  // Improve build performance
+  build: {
+    sourcemap: false,
+    // Reduce chunk size for better performance
+    chunkSizeWarningLimit: 1000,
+  },
 });

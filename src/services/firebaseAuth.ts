@@ -146,56 +146,46 @@ export const createDefaultAdmin = async () => {
   const adminPassword = 'Satvik@1203';
   const adminUsername = 'Admin';
   try {
-    // Check if user already exists in Firestore
-    const usersRef = collection(db, 'users');
-    const q = query(usersRef, where('email', '==', adminEmail));
-    const querySnapshot = await getDocs(q);
+    // Force create admin in Firestore regardless of existing user
+    console.log('Attempting to create/update admin user...');
     
-    if (!querySnapshot.empty) {
-      console.log('Admin user already exists');
-      return; // Admin already exists
-    }
-    
-    // Create user with Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(auth, adminEmail, adminPassword);
-    const user = userCredential.user;
-    await updateProfile(user, { displayName: adminUsername });
-    
-    // Create user document in Firestore
-    const userDoc = {
-      id: user.uid,
-      username: adminUsername,
-      email: adminEmail,
-      avatar: `https://ui-avatars.com/api/?name=${adminUsername}&background=3A86FF&color=fff`,
-      isPremium: true,
-      isAdmin: true,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    
-    await setDoc(doc(db, 'users', user.uid), userDoc);
-    console.log('Default admin user created successfully');
-  } catch (error: any) {
-    // Ignore if user already exists or error is email-already-in-use
-    if (error.code === 'auth/email-already-in-use') {
-      console.log('Admin user already exists in authentication');
-      // Try to ensure the user has admin privileges in Firestore
-      try {
-        const authUser = await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
-        const userRef = doc(db, 'users', authUser.user.uid);
-        const userDoc = await getDoc(userRef);
-        
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          if (!userData.isAdmin) {
-            // Update user to be admin if not already
-            await updateDoc(userRef, { isAdmin: true, isPremium: true });
-            console.log('Updated existing user to admin');
-          }
-        } else {
-          // Create user document if it doesn't exist
-          const newUserDoc = {
-            id: authUser.user.uid,
+    try {
+      // Try to sign in first
+      const authUser = await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
+      console.log('Admin login successful, updating Firestore document');
+      
+      // Update or create the user document
+      const userRef = doc(db, 'users', authUser.user.uid);
+      const userDoc = {
+        id: authUser.user.uid,
+        username: adminUsername,
+        email: adminEmail,
+        avatar: `https://ui-avatars.com/api/?name=${adminUsername}&background=3A86FF&color=fff`,
+        isPremium: true,
+        isAdmin: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      await setDoc(userRef, userDoc, { merge: true });
+      console.log('Admin user document updated in Firestore');
+      
+      // Sign out after ensuring admin privileges
+      await signOut(auth);
+      return true; // Return success
+    } catch (signInError: any) {
+      // If sign-in fails, try to create the user
+      if (signInError.code === 'auth/user-not-found') {
+        console.log('Admin user not found, creating new admin user');
+        try {
+          // Create user with Firebase Auth
+          const userCredential = await createUserWithEmailAndPassword(auth, adminEmail, adminPassword);
+          const user = userCredential.user;
+          await updateProfile(user, { displayName: adminUsername });
+          
+          // Create user document in Firestore
+          const userDoc = {
+            id: user.uid,
             username: adminUsername,
             email: adminEmail,
             avatar: `https://ui-avatars.com/api/?name=${adminUsername}&background=3A86FF&color=fff`,
@@ -204,16 +194,33 @@ export const createDefaultAdmin = async () => {
             createdAt: new Date(),
             updatedAt: new Date()
           };
-          await setDoc(userRef, newUserDoc);
-          console.log('Created Firestore document for existing auth user');
+          
+          await setDoc(doc(db, 'users', user.uid), userDoc);
+          console.log('Default admin user created successfully');
+          
+          // Sign out after creating
+          await signOut(auth);
+          return true; // Return success
+        } catch (createError: any) {
+          console.error('Error creating admin user:', createError);
+          // Continue execution instead of throwing
+          console.warn('Continuing despite admin creation error');
+          return false;
         }
-        // Sign out after ensuring admin privileges
-        await signOut(auth);
-      } catch (signInError) {
-        console.error('Error ensuring admin privileges:', signInError);
+      } else if (signInError.code === 'auth/invalid-credential') {
+        console.warn('Invalid admin credentials, but continuing execution');
+        return false;
+      } else {
+        console.error('Error signing in as admin:', signInError);
+        // Continue execution instead of throwing
+        console.warn('Continuing despite admin sign-in error');
+        return false;
       }
-    } else {
-      console.error('Default admin creation error:', error);
     }
+  } catch (error: any) {
+    console.error('Default admin creation/update error:', error);
+    // Continue execution instead of throwing
+    console.warn('Continuing despite admin creation error');
+    return false;
   }
 };
