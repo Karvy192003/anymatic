@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Bot, Smartphone, Play } from 'lucide-react';
+import FounderProfile from '../components/FounderProfile';
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -159,6 +160,21 @@ const AboutPage = () => {
           <div className="inline-flex items-center space-x-4 px-8 py-4 bg-gradient-to-r from-[#3A86FF] to-[#A259FF] rounded-2xl text-white">
             <Bot className="h-6 w-6" />
             <span className="font-medium">Powered by AI, Driven by Passion</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center text-[#2D2D2D] mb-12">Meet Our Founder</h2>
+          <div className="max-w-3xl mx-auto">
+            <FounderProfile 
+              name="Satvik Dubey" 
+              role="Founder & CEO" 
+              photoUrl="/images/satvik-dubey.jpg"
+              description="Passionate about making education accessible and engaging for everyone. With a background in technology and education, Satvik founded Anymate to transform how we learn complex concepts through the power of storytelling and animation."
+            />
           </div>
         </div>
       </section>

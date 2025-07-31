@@ -11,13 +11,12 @@ import { getStorage } from 'firebase/storage';
 // 5. Replace the config below with your new project's config
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyBV8vDlhPyVqdIvYq_TQdt5dm096_qWz_s",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "anymate-7d93d.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "anymate-7d93d",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "anymate-7d93d.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "602522370574",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:602522370574:web:49dc2e1119cd4827d1f25f",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-DH7484Z1T6"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCHeXGoU1ReYAtd7bBisUVN7LrXxIULRU8",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "anymate-bc00c.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "anymate-bc00c",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "anymate-bc00c.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "959004503400",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:959004503400:web:622a1675e0323f82b2badd"
 };
 
 console.log('Firebase Config:', {
@@ -73,4 +72,4 @@ try {
 }
 
 export { auth, db, storage };
-export default app; 
+export default app;
