@@ -41,19 +41,19 @@ const ContactPage = () => {
     {
       icon: MapPin,
       title: "Visit Us",
-      details: ["123 Innovation Street", "Tech Valley, CA 94043"],
+      details: ["Jaipur, India"],
       color: "from-[#3A86FF] to-[#A259FF]"
     },
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+1 (555) 123-4567", "Mon-Fri 9AM-6PM PST"],
+      details: ["+91 7876434370", "Mon-Fri 9AM-6PM"],
       color: "from-[#7AE582] to-[#3A86FF]"
     },
     {
       icon: Mail,
       title: "Email Us",
-      details: ["hello@anymate.ai", "support@anymate.ai"],
+      details: ["skaistha16@gmail.com", "karvy1902@gmail.com"],
       color: "from-[#FFD166] to-[#FF5CA8]"
     },
     {
@@ -305,7 +305,7 @@ const ContactPage = () => {
               <MapPin className="h-12 w-12 text-[#3A86FF] mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-[#2D2D2D] mb-2">Find Us</h3>
               <p className="text-gray-600">
-                Located in the heart of Silicon Valley's innovation district
+                Located in the heart Jaipur
               </p>
             </motion.div>
           </motion.div>
