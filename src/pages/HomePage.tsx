@@ -58,19 +58,19 @@ const founders = [
   {
     name: 'Karvy Goyel',
     role: 'Co-founder & Chief Marketing Officer (CMO)',
-    img: 'https://randomuser.me/api/portraits/men/32.jpg', // Placeholder
+    img: '/images/karvy-goyel.jpg', // Public folder image
     bio: `Karvy is a visionary marketer and co-founder who blends creative storytelling with strategic precision. As CMO, she leads brand growth and customer engagement with bold ideas and data-driven execution.`
   },
   {
     name: 'Sachit',
     role: 'Co-founder & Chief Executive Officer (CEO)',
-    img: 'https://randomuser.me/api/portraits/men/33.jpg', // Placeholder
+    img: '/images/sachit.jpg', // Public folder image
     bio: `Sachit sets the vision and pace of the company. As CEO and co-founder, he ensures our product, mission, and culture move forward together with clarity and purpose.`
   },
   {
     name: 'Satvik Dubey',
     role: 'Co-founder & Chief Technology Officer (CTO)',
-    img: 'https://randomuser.me/api/portraits/men/34.jpg', // Placeholder
+    img: '/images/satvik-dubey.jpg', // Public folder image
     bio: `Satvik drives our tech innovation. As CTO and co-founder, he builds systems that scale, leads engineering with precision, and ensures we stay ahead in product development.`
   }
 ];

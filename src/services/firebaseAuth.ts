@@ -10,6 +10,30 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
 import { User } from '../types';
 
+// Helper function to get user-friendly error messages
+const getErrorMessage = (errorCode: string): string => {
+  switch (errorCode) {
+    case 'auth/invalid-credential':
+      return 'Invalid email or password. Please check your credentials and try again.';
+    case 'auth/user-not-found':
+      return 'No account found with this email address. Please sign up or check your email.';
+    case 'auth/wrong-password':
+      return 'Incorrect password. Please try again.';
+    case 'auth/email-already-in-use':
+      return 'An account with this email already exists. Please sign in instead.';
+    case 'auth/weak-password':
+      return 'Password is too weak. Please choose a stronger password.';
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.';
+    case 'auth/too-many-requests':
+      return 'Too many failed attempts. Please try again later.';
+    case 'auth/user-disabled':
+      return 'This account has been disabled. Please contact support.';
+    default:
+      return 'An error occurred. Please try again.';
+  }
+};
+
 export const firebaseAuth = {
   // Register new user
   register: async (userData: { username: string; email: string; password: string }) => {
@@ -46,7 +70,8 @@ export const firebaseAuth = {
         token: await user.getIdToken()
       };
     } catch (error: any) {
-      throw new Error(error.message);
+      const message = getErrorMessage(error.code);
+      throw new Error(message);
     }
   },
 
@@ -75,7 +100,8 @@ export const firebaseAuth = {
         token: await user.getIdToken()
       };
     } catch (error: any) {
-      throw new Error(error.message);
+      const message = getErrorMessage(error.code);
+      throw new Error(message);
     }
   },
 
@@ -112,9 +138,11 @@ export const firebaseAuth = {
   onAuthStateChanged: (callback: (user: FirebaseUser | null) => void) => {
     return onAuthStateChanged(auth, callback);
   }
-}; 
+};
 
 // Create a default admin user if not exists
+// Commented out to prevent email-already-in-use error during app startup
+/*
 export const createDefaultAdmin = async () => {
   const adminEmail = 'kanhadubey268@gmail.com';
   const adminPassword = 'Satvik@1203';
@@ -145,4 +173,5 @@ export const createDefaultAdmin = async () => {
       console.error('Default admin creation error:', error);
     }
   }
-}; 
+};
+*/ 

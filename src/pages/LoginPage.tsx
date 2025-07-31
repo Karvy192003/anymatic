@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Bot, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Bot, Mail, Lock, Eye, EyeOff, Info } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
@@ -13,6 +13,7 @@ const LoginPage = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showTestAccounts, setShowTestAccounts] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +37,11 @@ const LoginPage = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const fillTestAccount = (email: string, password: string) => {
+    setFormData({ email, password });
+    setShowTestAccounts(false);
   };
 
   return (
@@ -70,6 +76,41 @@ const LoginPage = () => {
               {error}
             </div>
           )}
+
+          {/* Test Accounts Info */}
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Info className="h-4 w-4 text-blue-600" />
+                <span className="text-sm text-blue-800">Need test credentials?</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTestAccounts(!showTestAccounts)}
+                className="text-sm text-blue-600 hover:text-blue-800 underline"
+              >
+                {showTestAccounts ? 'Hide' : 'Show'} test accounts
+              </button>
+            </div>
+            
+            {showTestAccounts && (
+              <div className="mt-3 space-y-2">
+                <div className="text-xs text-blue-700">
+                  <strong>Admin Account:</strong>
+                  <button
+                    type="button"
+                    onClick={() => fillTestAccount('kanhadubey268@gmail.com', 'Satvik@1203')}
+                    className="ml-2 text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Use admin account
+                  </button>
+                </div>
+                <div className="text-xs text-blue-700">
+                  <strong>Or register a new account</strong> with any email that hasn't been used before.
+                </div>
+              </div>
+            )}
+          </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
