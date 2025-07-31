@@ -48,10 +48,10 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: Phone, text: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-    { icon: Mail, text: 'hello@anymate.com', href: 'mailto:hello@anymate.com' },
-    { icon: Globe, text: 'www.anymate.com', href: 'https://www.anymate.com' },
-    { icon: MapPin, text: '123 Learning Street, Education City, EC 12345', href: '#' }
+    { icon: Phone, text: '+91 7876434370' },
+    { icon: Mail, text: 'skaistha16@gmail.com', href: 'mailto:skaistha16@gmail.com' },
+    { icon: Globe, text: 'https://anymate12.netlify.app/contact', href: 'https://anymate12.netlify.app/contact' },
+    { icon: MapPin, text: 'Jaipur India', href: '#' }
   ];
 
   return (
